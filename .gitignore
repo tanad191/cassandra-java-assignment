@@ -1,0 +1,57 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.pid
+*.toDelete
+nohup.out
+
+# Build output directories #
+############################
+target/
+build/
+bin/
+nio_bill_of_materials/
+ssap_bill_of_materials/
+classes
+var
+tmp/**
+tmp/**/*
+*.tmp
+dependency-reduced-pom.xml
+*.versionsBackup
+
+# IntelliJ specific files/directories #
+#######################################
+out
+.idea
+*.ipr
+*.iws
+*.iml
+.attach*
+
+# Eclipse specific files/directories #
+######################################
+.classpath
+.project
+.settings
+.metadata
