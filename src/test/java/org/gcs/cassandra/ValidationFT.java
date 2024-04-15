@@ -32,8 +32,8 @@ class ValidationFT {
 
     @Test
     void satellite_reads_scan_location() throws Exception {
-        String getUrl = "http://localhost:8080/scan/location/25N,71W"; // TODO Change if your endpoint is different
-        String postUrl = "http://localhost:8080/scan/location"; // TODO Change if your endpoint is different
+        String getUrl = "http://localhost:8080/ScanLocations/\"25N,71W\""; // TODO Change if your endpoint is different
+        String postUrl = "http://localhost:8080/ScanLocations"; // TODO Change if your endpoint is different
 
         String json = "" +
                 "{" +
@@ -63,8 +63,8 @@ class ValidationFT {
 
     @Test
     void satellite_sends_scan_results() throws Exception {
-        String getUrl = "http://localhost:8080/scan/result/location/25N,71W/day/2025-08-17"; // TODO Change if your endpoint is different
-        String postUrl = "http://localhost:8080/scan/result"; // TODO Change if your endpoint is different
+        String getUrl = "http://localhost:8080/ScanResults/location/25N,71W/day/2025-08-17"; // TODO Change if your endpoint is different
+        String postUrl = "http://localhost:8080/ScanResults"; // TODO Change if your endpoint is different
 
         String json = "" +
                 "{" +
