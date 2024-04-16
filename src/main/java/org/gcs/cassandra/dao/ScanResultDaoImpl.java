@@ -2,14 +2,19 @@ package org.gcs.cassandra.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.gcs.cassandra.service.ScanResult;
+import org.gcs.cassandra.ScanResult;
 
 public class ScanResultDaoImpl implements ScanResultDao {
 	
    //list is working as a database
    List<ScanResult> ScanResults;
 
+   public ScanResultDaoImpl(){
+      ScanResults = new ArrayList<ScanResult>();
+   }
+   
    public ScanResultDaoImpl(ScanResult scanResult){
       ScanResults = new ArrayList<ScanResult>();
       ScanResults.add(scanResult);
@@ -28,7 +33,7 @@ public class ScanResultDaoImpl implements ScanResultDao {
    }
 
    @Override
-   public ScanResult getScanResultById(String scanId) {
+   public ScanResult getScanResultById(UUID scanId) {
       ScanResult returnresult = new ScanResult();
       for (ScanResult result : ScanResults) {
          if (result.getResultId() == scanId) {
@@ -62,5 +67,9 @@ public class ScanResultDaoImpl implements ScanResultDao {
    @Override
    public void addScanResult(ScanResult scanResult) {
       ScanResults.add(scanResult);
+   }
+
+   public void Clear() {
+      ScanResults = new ArrayList<ScanResult>();
    }
 }

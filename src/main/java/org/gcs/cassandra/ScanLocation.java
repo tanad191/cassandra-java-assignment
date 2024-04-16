@@ -1,10 +1,17 @@
-package org.gcs.cassandra.service;
+package org.gcs.cassandra;
+
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+
+import java.time.Instant;
+import java.util.UUID;
 
 // Creating an entity ScanLocation
+@Table
 public class ScanLocation {
     public ScanLocation() {}
     // Parameterized Constructor to assign the values to the properties of the entity
-    public ScanLocation( String locationId, String location, String name) 
+    public ScanLocation( UUID locationId, String location, String name) 
     { 
         super();
         this.locationId = locationId;
@@ -12,7 +19,9 @@ public class ScanLocation {
         this.name = name;
     }
 
-    private String locationId;
+    @PrimaryKey
+    private UUID locationId;
+    
     private String location;
     private String name;
 
@@ -21,17 +30,17 @@ public class ScanLocation {
     @Override
     public String toString() 
     { 
-        return "ScanLocation [locationId=" + locationId + ", location=" + location + ", name=" + name + "]";
+        return "ScanLocation [locationId=" + locationId.toString() + ", location=" + location + ", name=" + name + "]";
     } 
     
     // Getters and setters of 
     // the properties 
-    public String getLocationId() 
+    public UUID getLocationId() 
     { 
         return locationId;
     }
     
-    public void setLocationId(String locationId) 
+    public void setLocationId(UUID locationId) 
     { 
         this.locationId = locationId;
     } 
@@ -55,4 +64,5 @@ public class ScanLocation {
     { 
         this.name = name;
     }
+    
 }

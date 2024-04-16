@@ -2,13 +2,18 @@ package org.gcs.cassandra.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.gcs.cassandra.service.ScanLocation;
+import org.gcs.cassandra.ScanLocation;
 
 public class ScanLocationDaoImpl implements ScanLocationDao {
 	
    //list is working as a database
    List<ScanLocation> ScanLocations;
+
+   public ScanLocationDaoImpl(){
+      ScanLocations = new ArrayList<ScanLocation>();
+   }
 
    public ScanLocationDaoImpl(ScanLocation scanLocation){
       ScanLocations = new ArrayList<ScanLocation>();
@@ -28,7 +33,7 @@ public class ScanLocationDaoImpl implements ScanLocationDao {
    }
 
    @Override
-   public ScanLocation getScanLocationById(String scanId) {
+   public ScanLocation getScanLocationById(UUID scanId) {
       ScanLocation returnresult = new ScanLocation();
       for (ScanLocation result : ScanLocations) {
          if (result.getLocationId() == scanId) {
@@ -51,5 +56,9 @@ public class ScanLocationDaoImpl implements ScanLocationDao {
    @Override
    public void addScanLocation(ScanLocation scanLocation) {
       ScanLocations.add(scanLocation);
+   }
+
+   public void Clear() {
+      ScanLocations = new ArrayList<ScanLocation>();
    }
 }

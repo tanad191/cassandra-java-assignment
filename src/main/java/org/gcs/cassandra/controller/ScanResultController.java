@@ -1,8 +1,7 @@
 package org.gcs.cassandra.controller;
 
+import org.gcs.cassandra.ScanResult;
 import org.gcs.cassandra.dao.ScanResultDaoImpl;
-import org.gcs.cassandra.service.ScanResult;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ScanResults")
@@ -27,7 +27,7 @@ public class ScanResultController {
         method= {RequestMethod.GET},
         headers= {"content-type=application/json"}
         )
-    public ScanResult getScanResultById(@PathVariable String id) {
+    public ScanResult getScanResultById(@PathVariable UUID id) {
         return scanResults.getScanResultById(id);
     }
 
@@ -52,7 +52,7 @@ public class ScanResultController {
         method= {RequestMethod.POST},
         headers= {"content-type=application/json"}
         )
-    public void deleteScanResult(@PathVariable String ScanResultId) {
+    public void deleteScanResult(@PathVariable UUID ScanResultId) {
         ScanResult OldScanResult = scanResults.getScanResultById(ScanResultId);
         scanResults.deleteScanResult(OldScanResult);
     }

@@ -1,12 +1,18 @@
-package org.gcs.cassandra.service;
+package org.gcs.cassandra;
 
 import java.util.List;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+
+import java.time.Instant;
+import java.util.UUID;
 
 // Creating an entity ScanResult
+@Table
 public class ScanResult {
     public ScanResult() {}
     // Parameterized Constructor to assign the values to the properties of the entity
-    public ScanResult( String resultId, String location, String scanDay, String birdId, String birdSpecies, List<String> birdTraits )
+    public ScanResult( UUID resultId, String location, String scanDay, String birdId, String birdSpecies, List<String> birdTraits )
     { 
         super();
         this.resultId = resultId;
@@ -17,7 +23,9 @@ public class ScanResult {
         this.birdTraits = birdTraits;
     }
 
-    private String resultId;
+    @PrimaryKey
+    private UUID resultId;
+
     private String location;
     private String scanDay;
     private String birdId;
@@ -39,17 +47,17 @@ public class ScanResult {
             }
         }
         birdTraitList = birdTraitList + "]";
-        return "ScanResult [resultId=" + resultId + ", location=" + location + ", scanDay=" + scanDay + ", birdId=" + birdId + ", birdSpecies=" + birdSpecies + ", birdTraits= " + birdTraitList + "]";
+        return "ScanResult [resultId=" + resultId.toString() + ", location=" + location + ", scanDay=" + scanDay + ", birdId=" + birdId + ", birdSpecies=" + birdSpecies + ", birdTraits= " + birdTraitList + "]";
     } 
     
     // Getters and setters of 
     // the properties 
-    public String getResultId() 
+    public UUID getResultId() 
     { 
         return resultId;
     }
     
-    public void setResultId(String resultId) 
+    public void setResultId(UUID resultId) 
     { 
         this.resultId = resultId;
     } 
@@ -83,10 +91,24 @@ public class ScanResult {
     { 
         this.birdId = birdId;
     }
-    public Object getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+
+    public String getBirdSpecies() 
+    { 
+        return birdSpecies;
+    } 
+    
+    public void setBirdSpecies(String birdSpecies) 
+    { 
+        this.birdSpecies = birdSpecies;
     }
-
-
+    
+    public List<String> getBirdTraits() 
+    { 
+        return birdTraits;
+    } 
+    
+    public void setBirdTraits(List<String> birdTraits) 
+    { 
+        this.birdTraits = birdTraits;
+    }
 }

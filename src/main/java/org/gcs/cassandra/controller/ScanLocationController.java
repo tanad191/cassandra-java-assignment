@@ -1,7 +1,7 @@
 package org.gcs.cassandra.controller;
 
+import org.gcs.cassandra.ScanLocation;
 import org.gcs.cassandra.dao.ScanLocationDaoImpl;
-import org.gcs.cassandra.service.ScanLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ScanLocations")
@@ -26,7 +27,7 @@ public class ScanLocationController {
         method= {RequestMethod.GET},
         headers= {"content-type=application/json"}
         )
-    public ScanLocation getScanLocationById(@PathVariable String id) {
+    public ScanLocation getScanLocationById(@PathVariable UUID id) {
         return scanLocations.getScanLocationById(id);
     }
 
@@ -51,7 +52,7 @@ public class ScanLocationController {
         method= {RequestMethod.POST},
         headers= {"content-type=application/json"}
         )
-    public void deleteScanLocation(@PathVariable String ScanLocationId) {
+    public void deleteScanLocation(@PathVariable UUID ScanLocationId) {
         ScanLocation OldScanLocation = scanLocations.getScanLocationById(ScanLocationId);
         scanLocations.deleteScanLocation(OldScanLocation);
     }

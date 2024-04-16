@@ -12,13 +12,13 @@ CREATE KEYSPACE IF NOT EXISTS oboe WITH replication = {'class': 'SimpleStrategy'
 -- Create tables
 
 CREATE TABLE IF NOT EXISTS oboe.scan_location (
-    locationid text PRIMARY KEY,
+    locationId int PRIMARY KEY,
     location text,
     name text
 );
 
 CREATE TABLE IF NOT EXISTS oboe.scan_result (
-    resultId text PRIMARY KEY,
+    resultId int PRIMARY KEY,
     location text,
     scanDay date,
     birdId text,
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS oboe.scan_result (
 
 INSERT INTO oboe.scan_location
 (locationid, location, name)
-VALUES ('a', '25N,71W', 'Bermuda Triangle');
+VALUES (1, '25N,71W', 'Bermuda Triangle');
 
 INSERT INTO oboe.scan_result
 (resultId, location, scanDay, birdId, birdSpecies, birdTraits)
-VALUES ('a', '25N,71W', '2025-08-17', '50554d6e-29bb-11e5-b345-feff819cdc9f', 'Common loon', [ 'red eyes', 'swim and dive', 'webbed feet' ]);
+VALUES (1, '25N,71W', '2025-08-17', '50554d6e-29bb-11e5-b345-feff819cdc9f', 'Common loon', [ 'red eyes', 'swim and dive', 'webbed feet' ]);
 
 ## DML (if any)
