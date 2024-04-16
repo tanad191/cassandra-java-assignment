@@ -32,13 +32,13 @@ class ValidationFT {
 
     @Test
     void satellite_reads_scan_location() throws Exception {
-        String getUrl = "http://localhost:8080/ScanLocations/\"25N,71W\""; // TODO Change if your endpoint is different
+        String getUrl = "http://localhost:8080/ScanLocations/\'25N,71W\'"; // TODO Change if your endpoint is different
         String postUrl = "http://localhost:8080/ScanLocations"; // TODO Change if your endpoint is different
 
         String json = "" +
                 "{" +
-                "\"location\": \"25N,71W\"," +
-                "\"name\": \"Bermuda Triangle\"" +
+                "\'location\': \'25N,71W\'," +
+                "\'name\': \'Bermuda Triangle\'" +
                 "}";
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create(postUrl))
@@ -68,11 +68,11 @@ class ValidationFT {
 
         String json = "" +
                 "{" +
-                "\"location\": \"25N,71W\"," +
-                "\"scanDay\": \"2025-08-17\"," +
-                "\"birdId\": \"50554d6e-29bb-11e5-b345-feff819cdc9f\"," +
-                "\"birdSpecies\": \"Common loon\"," +
-                "\"birdTraits\": [\"red eyes\", \"swim and dive\", \"webbed feet\"]" +
+                "\'location\': \'25N,71W\'," +
+                "\'scanDay\': \'2025-08-17\'," +
+                "\'birdId\': \'50554d6e-29bb-11e5-b345-feff819cdc9f\'," +
+                "\'birdSpecies\': \'Common loon\'," +
+                "\'birdTraits\': [\'red eyes\', \'swim and dive\', \'webbed feet\']" +
                 "}";
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create(postUrl))

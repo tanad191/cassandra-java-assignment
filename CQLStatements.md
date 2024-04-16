@@ -29,11 +29,11 @@ CREATE TABLE IF NOT EXISTS oboe.scan_result (
 -- Insert sample data
 
 INSERT INTO oboe.scan_location
-(locationid, location, name)
-VALUES (1, '25N,71W', 'Bermuda Triangle');
+(location, name)
+VALUES ('25N,71W', 'Bermuda Triangle');
 
 INSERT INTO oboe.scan_result
-(resultId, location, scanDay, birdId, birdSpecies, birdTraits)
-VALUES (1, '25N,71W', '2025-08-17', '50554d6e-29bb-11e5-b345-feff819cdc9f', 'Common loon', [ 'red eyes', 'swim and dive', 'webbed feet' ]);
+(location, scanDay, birdId, birdSpecies, birdTraits)
+VALUES ('25N,71W', '2025-08-17', '50554d6e-29bb-11e5-b345-feff819cdc9f', 'Common loon', [ 'red eyes', 'swim and dive', 'webbed feet' ]);
 
 ## DML (if any)
