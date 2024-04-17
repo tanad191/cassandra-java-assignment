@@ -32,12 +32,12 @@ class ValidationFT {
 
     @Test
     void satellite_reads_scan_location() throws Exception {
-        String getUrl = "http://localhost:8080/ScanLocations/\'25N,71W\'"; // TODO Change if your endpoint is different
-        String postUrl = "http://localhost:8080/ScanLocations"; // TODO Change if your endpoint is different
+        String getUrl = "http://localhost:8080/api/ScanLocations/find?coordinates=%2725N%2C71W%27"; // TODO Change if your endpoint is different
+        String postUrl = "http://localhost:8080/api/ScanLocations"; // TODO Change if your endpoint is different
 
         String json = "" +
                 "{" +
-                "\'location\': \'25N,71W\'," +
+                "\'coordinates\': \'25N,71W\'," +
                 "\'name\': \'Bermuda Triangle\'" +
                 "}";
         HttpRequest postRequest = HttpRequest.newBuilder()
@@ -63,12 +63,12 @@ class ValidationFT {
 
     @Test
     void satellite_sends_scan_results() throws Exception {
-        String getUrl = "http://localhost:8080/ScanResults/location/25N,71W/day/2025-08-17"; // TODO Change if your endpoint is different
-        String postUrl = "http://localhost:8080/ScanResults"; // TODO Change if your endpoint is different
+        String getUrl = "http://localhost:8080/api/ScanResults/location/25N,71W/day/2025-08-17"; // TODO Change if your endpoint is different
+        String postUrl = "http://localhost:8080/api/ScanResults"; // TODO Change if your endpoint is different
 
         String json = "" +
                 "{" +
-                "\'location\': \'25N,71W\'," +
+                "\'coordinates\': \'25N,71W\'," +
                 "\'scanDay\': \'2025-08-17\'," +
                 "\'birdId\': \'50554d6e-29bb-11e5-b345-feff819cdc9f\'," +
                 "\'birdSpecies\': \'Common loon\'," +

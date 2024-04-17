@@ -11,13 +11,17 @@ public class ScanLocation {
   @PrimaryKey
   private UUID locationId;
 
-  private String location;
+  private String coordinates;
   
   private String name;
   
+  public ScanLocation() {
+    
+  }
+  
   public ScanLocation(UUID locationId, String location, String name) {
     this.locationId = locationId;
-    this.location = location;
+    this.coordinates = location;
     this.name = name;
   }
 
@@ -30,11 +34,11 @@ public class ScanLocation {
   }
 
   public String getLocation() {
-    return location;
+    return coordinates;
   }
 
   public void setLocation(String Location) {
-    this.location = Location;
+    this.coordinates = Location;
   }
 
   public String getName() {
@@ -43,5 +47,10 @@ public class ScanLocation {
 
   public void setName(String Name) {
     this.name = Name;
+  }
+  
+  @Override
+  public String toString() {
+    return "ScanLocation [id=" + locationId + ", coordinates=" + coordinates + ", name=" + name + "]";
   }
 }

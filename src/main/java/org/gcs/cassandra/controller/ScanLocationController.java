@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,11 +32,7 @@ public class ScanLocationController {
     @Autowired
     ScanLocationRepository scanLocationRepository;
 
-    @RequestMapping(
-        value="/ScanLocations/{id}",
-        method= {RequestMethod.GET},
-        headers= {"content-type=application/json"}
-        )
+    @PostMapping("/ScanLocations")
     public ResponseEntity<List<ScanLocation>> getAllScanLocations() {
         try {
             List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
@@ -46,15 +45,13 @@ public class ScanLocationController {
         
             return new ResponseEntity<>(scanLocations, HttpStatus.OK);
           } catch (Exception e) {
+          	e.printStackTrace();
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(
-        value="/ScanLocations/{id}",
-        method= {RequestMethod.GET},
-        headers= {"content-type=application/json"}
-        )
+    @GetMapping("/ScanLocations/get/{id}")
     public ResponseEntity<ScanLocation> getScanLocationById(@PathVariable("id") UUID id) {
         Optional<ScanLocation> scanLocationData = scanLocationRepository.findById(id);
         
@@ -65,32 +62,7 @@ public class ScanLocationController {
         }
     }
 
-    @RequestMapping(
-        value="/ScanLocations/{location}",
-        method= {RequestMethod.GET},
-        headers= {"content-type=application/json"}
-        )
-    public ResponseEntity<List<ScanLocation>> getScanLocationById(@PathVariable("location") String coordinates) {
-        try {
-            List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
-        
-            scanLocationRepository.findByCoordinates(coordinates).forEach(scanLocations::add);
-        
-            if (scanLocations.isEmpty()) {
-              return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        
-            return new ResponseEntity<>(scanLocations, HttpStatus.OK);
-          } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @RequestMapping(
-        value="/ScanLocations",
-        method= {RequestMethod.POST},
-        headers= {"content-type=application/json"}
-        )
+    @PostMapping("/ScanLocations/create")
     public ResponseEntity<ScanLocation> createScanLocation(@RequestBody ScanLocation scanLocation) {
         try {
             ScanLocation _scanLocation = scanLocationRepository.save(new ScanLocation(UUIDs.timeBased(), scanLocation.getLocation(), scanLocation.getName()));
@@ -100,11 +72,7 @@ public class ScanLocationController {
         }
     }
 
-    @RequestMapping(
-        value="/ScanLocations/{id}",
-        method= {RequestMethod.PUT},
-        headers= {"content-type=application/json"}
-        )
+    @PutMapping("/ScanLocations/update/{id}")
     public ResponseEntity<ScanLocation> updateScanLocation(@PathVariable("id") UUID id, @RequestBody ScanLocation scanLocation) {
         Optional<ScanLocation> scanLocationData = scanLocationRepository.findById(id);
 
@@ -118,12 +86,8 @@ public class ScanLocationController {
         }
     }
     
-    @RequestMapping(
-        value="/ScanLocations/{coordinates}",
-        method= {RequestMethod.PUT},
-        headers= {"content-type=application/json"}
-        )
-    public ResponseEntity<List<ScanLocation>> updateScanLocationsByCoordinates(@PathVariable("location") String coordinates, @RequestBody ScanLocation scanLocation) {
+    @PutMapping("/ScanLocations/update/{coordinates}")
+    public ResponseEntity<List<ScanLocation>> updateScanLocationsByCoordinates(@PathVariable("coordinates") String coordinates, @RequestBody ScanLocation scanLocation) {
         List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
         scanLocationRepository.findByCoordinates(coordinates).forEach(scanLocations::add);
 
@@ -138,40 +102,32 @@ public class ScanLocationController {
         }
     }
 
-    @RequestMapping(
-        value="/ScanLocations/{id}",
-        method= {RequestMethod.DELETE},
-        headers= {"content-type=application/json"}
-    )
+    @DeleteMapping("/ScanLocations/delete/{id}")
     public ResponseEntity<HttpStatus> deleteScanLocation(@PathVariable("id") UUID id) {
         try {
-            scanLocationRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        scanLocationRepository.deleteById(id);
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
           } catch (Exception e) {
+        	e.printStackTrace();
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
           }
     }
 
-    @RequestMapping(
-        value="/ScanLocations",
-        method= {RequestMethod.DELETE},
-        headers= {"content-type=application/json"}
-    )
+    @DeleteMapping("/ScanLocations/delete")
     public ResponseEntity<HttpStatus> deleteAllScanLocations() {
         try {
             scanLocationRepository.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
           } catch (Exception e) {
+        	e.printStackTrace();
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
           }
     }
 
-    @RequestMapping(
-        value="/ScanLocations/{location}",
-        method= {RequestMethod.GET},
-        headers= {"content-type=application/json"}
-        )
-    public ResponseEntity<List<ScanLocation>> findByCoordinates(@PathVariable("location") String coordinates) {
+    @GetMapping("/ScanLocations/find")
+    public ResponseEntity<List<ScanLocation>> findByCoordinates(@RequestParam(value="coordinates") String coordinates) {
         List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
         scanLocationRepository.findByCoordinates(coordinates).forEach(scanLocations::add);
 

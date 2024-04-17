@@ -9,5 +9,5 @@ import org.springframework.data.cassandra.repository.CassandraRepository;
 
 public interface ScanLocationRepository extends CassandraRepository<ScanLocation, UUID> {
   @AllowFiltering
-  List<ScanLocation> findByCoordinates(String location);
+  List<ScanLocation> findByCoordinates(String coordinates);
 }
