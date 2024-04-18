@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.datastax.driver.core.utils.UUIDs;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -32,7 +29,7 @@ public class ScanLocationController {
     @Autowired
     ScanLocationRepository scanLocationRepository;
 
-    @PostMapping("/ScanLocations")
+    @GetMapping("/ScanLocations")
     public ResponseEntity<List<ScanLocation>> getAllScanLocations() {
         try {
             List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
@@ -62,12 +59,16 @@ public class ScanLocationController {
         }
     }
 
-    @PostMapping("/ScanLocations/create")
+    @PostMapping("/ScanLocations")
     public ResponseEntity<ScanLocation> createScanLocation(@RequestBody ScanLocation scanLocation) {
+        UUID newUUID = UUID.randomUUID();
+        ScanLocation newScanLocation = new ScanLocation(newUUID.toString(), scanLocation.getCoordinates(), scanLocation.getName());
         try {
-            ScanLocation _scanLocation = scanLocationRepository.save(new ScanLocation(UUIDs.timeBased(), scanLocation.getLocation(), scanLocation.getName()));
+            ScanLocation _scanLocation = scanLocationRepository.save(newScanLocation);
             return new ResponseEntity<>(_scanLocation, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println("ERROR: Unable to save " + newUUID.toString() + ", " + newScanLocation.toString());
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -78,7 +79,7 @@ public class ScanLocationController {
 
         if (scanLocationData.isPresent()) {
           ScanLocation _scanLocation = scanLocationData.get();
-          _scanLocation.setLocation(scanLocation.getLocation());
+          _scanLocation.setCoordinates(scanLocation.getCoordinates());
           _scanLocation.setName(scanLocation.getName());
           return new ResponseEntity<>(scanLocationRepository.save(_scanLocation), HttpStatus.OK);
         } else {
@@ -89,11 +90,17 @@ public class ScanLocationController {
     @PutMapping("/ScanLocations/update/{coordinates}")
     public ResponseEntity<List<ScanLocation>> updateScanLocationsByCoordinates(@PathVariable("coordinates") String coordinates, @RequestBody ScanLocation scanLocation) {
         List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
-        scanLocationRepository.findByCoordinates(coordinates).forEach(scanLocations::add);
+        List<ScanLocation> scanLocationMatches = new ArrayList<ScanLocation>();
+        scanLocationRepository.findAll().forEach(scanLocations::add);
+        for (ScanLocation currentScan : scanLocations) {
+        	if (currentScan.getCoordinates().equals(coordinates)) {
+        		scanLocationMatches.add(currentScan);
+        	}
+        }
 
         if (scanLocations.size() > 0) {
-            for (ScanLocation _scanLocation : scanLocations) {
-                _scanLocation.setLocation(scanLocation.getLocation());
+            for (ScanLocation _scanLocation : scanLocationMatches) {
+                _scanLocation.setCoordinates(scanLocation.getCoordinates());
                 _scanLocation.setName(scanLocation.getName());
             }          
           return new ResponseEntity<>(scanLocationRepository.saveAll(scanLocations), HttpStatus.OK);
@@ -126,13 +133,19 @@ public class ScanLocationController {
           }
     }
 
-    @GetMapping("/ScanLocations/find")
-    public ResponseEntity<List<ScanLocation>> findByCoordinates(@RequestParam(value="coordinates") String coordinates) {
+    @GetMapping("/ScanLocations/Coordinates/{coordinates}")
+    public ResponseEntity<List<ScanLocation>> findByCoordinates(@PathVariable("coordinates") String coordinates) {
         List<ScanLocation> scanLocations = new ArrayList<ScanLocation>();
-        scanLocationRepository.findByCoordinates(coordinates).forEach(scanLocations::add);
+        List<ScanLocation> scanLocationMatches = new ArrayList<ScanLocation>();
+        scanLocationRepository.findAll().forEach(scanLocations::add);
+        for (ScanLocation currentScan : scanLocations) {
+        	if (currentScan.getCoordinates().equals(coordinates)) {
+        		scanLocationMatches.add(currentScan);
+        	}
+        }
 
-        if (scanLocations.size() > 0) {
-            return new ResponseEntity<>(scanLocations, HttpStatus.OK);
+        if (scanLocationMatches.size() > 0) {
+            return new ResponseEntity<>(scanLocationMatches, HttpStatus.OK);
         } else {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

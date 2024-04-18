@@ -1,7 +1,5 @@
 package org.gcs.cassandra.entity;
 
-import java.util.UUID;
-
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -9,36 +7,35 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class ScanLocation {
   
   @PrimaryKey
-  private UUID locationId;
+  private String locationId;
 
   private String coordinates;
-  
   private String name;
   
   public ScanLocation() {
     
   }
   
-  public ScanLocation(UUID locationId, String location, String name) {
+  public ScanLocation(String locationId, String location, String name) {
     this.locationId = locationId;
     this.coordinates = location;
     this.name = name;
   }
 
-  public UUID getId() {
+  public String getId() {
     return locationId;
   }
 
-  public void setId(UUID id) {
+  public void setId(String id) {
     this.locationId = id;
   }
 
-  public String getLocation() {
+  public String getCoordinates() {
     return coordinates;
   }
 
-  public void setLocation(String Location) {
-    this.coordinates = Location;
+  public void setCoordinates(String Coordinates) {
+    this.coordinates = Coordinates;
   }
 
   public String getName() {
